@@ -47,6 +47,9 @@
     "test": "node --import tsx --test test/*.test.ts",
     "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
+  "dependencies": {
+    "zod": "^4.0.0"
+  },
   "peerDependencies": {
     "better-auth": ">=1.6.0"
   },
