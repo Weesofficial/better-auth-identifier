@@ -122,7 +122,12 @@ export const identifier = (options: IdentifierOptions = {}) => {
             });
           }
 
-          const account = user ? await ctx.context.internalAdapter.findCredentialAccount(user.id) : null;
+          // `findCredentialAccount` does not exist in 1.6; `findAccounts` is in every supported release.
+          const account = user
+            ? (await ctx.context.internalAdapter.findAccounts(user.id)).find(
+                (a) => a.providerId === "credential" && a.accountId === user.id,
+              )
+            : null;
           const hash = account?.password;
           if (!user || !hash) {
             // Same cost as a real verification, so a missing user is not faster.
